@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <button id="getBtn">GET下载</button>
+    <br>
+    <br>
+    <button id="postBtn">POST下载</button>
+    　
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+    <script>
+        $(function(){
+            $("#getBtn").click(function(){
+                downloadFile('get');
+            });
+            $("#postBtn").click(function(){
+                downloadFile('post');
+            });
+
+            function downloadFile(method) {
+                var url = "http://127.0.0.1/fsockopen/center.php";
+                var form = $("<form>");
+                form.attr("style", "display:none");
+                form.attr("target", "");
+                form.attr("method", method);
+                form.attr("action", url);
+                $("body").append(form);
+                form.submit();//表单提交
+            }
+        })
+    </script>
+</body>
+
+</html>
