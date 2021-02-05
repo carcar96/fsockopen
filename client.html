@@ -8,10 +8,22 @@
 </head>
 
 <body>
+    <span>主服务器（文件）地址：</span><br>
+    <input id="msurl" type="text" placeholder="主服务器（文件）地址" value="http://192.168.5.164:8090/exercise/fsockopen/server.php" style="width:350px" />
+    <br><br>
+
+    <span>下载文件（upload目录下）的名称</span><br>
+    <input id="filename" type="text" placeholder="upload目录下的文件" value="a.txt" style="width:350px" />
+    <br><br>
+    
+    <span>中转服务器地址：</span><br>
+    <input id="csurl" type="text" placeholder="中转服务器地址" value="http://192.168.5.164:8090/exercise/fsockopen/center.php" style="width:350px" />
+    <br><br>
+
     <button id="getBtn">GET下载</button>
-    <br>
-    <br>
-    <button id="postBtn">POST下载</button>
+    <br><br>
+
+    <button id="postBtn">POST下载(仅对txt文件有效)</button>
     　
     <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
     <script>
@@ -24,12 +36,16 @@
             });
 
             function downloadFile(method) {
-                var url = "http://127.0.0.1/fsockopen/center.php";
+                var msurl = $("#msurl").val();
+                var csurl = $("#csurl").val();
+                var filename = $("#filename").val();
                 var form = $("<form>");
                 form.attr("style", "display:none");
                 form.attr("target", "");
                 form.attr("method", method);
-                form.attr("action", url);
+                form.attr("action", csurl);
+                form.append($("<input type='hidden' name='msurl'/>").val(msurl));
+                form.append($("<input type='hidden' name='filename'/>").val(filename));
                 $("body").append(form);
                 form.submit();//表单提交
             }
